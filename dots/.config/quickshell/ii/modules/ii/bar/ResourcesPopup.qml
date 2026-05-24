@@ -90,5 +90,26 @@ StyledPopup {
                 }
             }
         }
+
+        Column {
+            visible: ResourceUsage.gpuAvailable
+            anchors.top: parent.top
+            spacing: 8
+            StyledPopupHeaderRow { icon: "memory"; label: ResourceUsage.gpuName }
+            Column {
+                spacing: 4
+                StyledPopupValueRow {
+                    icon: "bolt"
+                    label: Translation.tr("Load:")
+                    value: `${Math.round(ResourceUsage.gpuUsage * 100)}%`
+                }
+                StyledPopupValueRow {
+                    visible: ResourceUsage.gpuMemTotalFilePath !== ""
+                    icon: "empty_dashboard"
+                    label: Translation.tr("VRAM:")
+                    value: root.formatKB(ResourceUsage.gpuMemoryUsed) + " / " + root.formatKB(ResourceUsage.gpuMemoryTotal)
+                }
+            }
+        }
     }
 }

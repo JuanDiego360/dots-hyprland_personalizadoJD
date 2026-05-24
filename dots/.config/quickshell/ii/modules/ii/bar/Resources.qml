@@ -31,7 +31,7 @@ MouseArea {
             shown: (Config.options.bar.resources.alwaysShowSwap && percentage > 0) || 
                 (MprisController.activePlayer?.trackTitle == null) ||
                 root.alwaysShowAllResources
-            Layout.leftMargin: shown ? 6 : 0
+            Layout.leftMargin: shown ? 3 : 0
             warningThreshold: Config.options.bar.resources.swapWarningThreshold
         }
 
@@ -41,8 +41,20 @@ MouseArea {
             shown: Config.options.bar.resources.alwaysShowCpu || 
                 !(MprisController.activePlayer?.trackTitle?.length > 0) ||
                 root.alwaysShowAllResources
-            Layout.leftMargin: shown ? 6 : 0
+            Layout.leftMargin: shown ? 3 : 0
             warningThreshold: Config.options.bar.resources.cpuWarningThreshold
+        }
+
+        Resource {
+            iconName: "memory"
+            percentage: ResourceUsage.gpuUsage
+            shown: ResourceUsage.gpuAvailable && (
+                Config.options.bar.resources.alwaysShowGpu ||
+                !(MprisController.activePlayer?.trackTitle?.length > 0) ||
+                root.alwaysShowAllResources
+            )
+            Layout.leftMargin: shown ? 3 : 0
+            warningThreshold: Config.options.bar.resources.gpuWarningThreshold
         }
 
     }

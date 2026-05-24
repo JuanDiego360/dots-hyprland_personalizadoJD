@@ -9,12 +9,12 @@ import qs.modules.waffle.bar.tray
 BarIconButton {
     id: root
 
-    visible: Updates.updateAdvised || Updates.updateStronglyAdvised
+    visible: Updates.count > 0
     padding: 4
     iconName: "arrow-sync"
     iconSize: 20 // Needed because the icon appears to have some padding
     iconMonochrome: true
-    tooltipText: Translation.tr("Get the latest features and security improvements with\nthe newest feature update.\n\n%1 packages").arg(Updates.count)
+    tooltipText: "Actualizaciones pendientes:\n- Pacman: " + Updates.pacmanCount + "\n- AUR: " + Updates.aurCount + "\n- Flatpak: " + Updates.flatpakCount
 
     onClicked: {
         Quickshell.execDetached(["bash", "-c", Config.options.apps.update]);

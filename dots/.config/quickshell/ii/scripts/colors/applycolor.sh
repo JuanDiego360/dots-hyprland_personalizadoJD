@@ -27,6 +27,8 @@ IFS=$'\n'
 colorlist=($colornames)     # Array of color names
 colorvalues=($colorstrings) # Array of color values
 
+echo "applycolor.sh: colorlist size is ${#colorlist[@]}"
+
 apply_kitty() {  
   # Check if terminal escape sequence template exists
   if [ ! -f "$SCRIPT_DIR/terminal/kitty-theme.conf" ]; then
@@ -74,8 +76,8 @@ apply_anyterm() {
 }
 
 apply_term() {
+  apply_kitty
   apply_anyterm &
-  apply_kitty &
 }
 
 # Check if terminal theming is enabled in config
@@ -83,11 +85,11 @@ CONFIG_FILE="$XDG_CONFIG_HOME/illogical-impulse/config.json"
 if [ -f "$CONFIG_FILE" ]; then
   enable_terminal=$(jq -r '.appearance.wallpaperTheming.enableTerminal' "$CONFIG_FILE")
   if [ "$enable_terminal" = "true" ]; then
-    apply_term &
+    apply_term
   fi
 else
   echo "Config file not found at $CONFIG_FILE. Applying terminal theming by default."
-  apply_term &
+  apply_term
 fi
 
 # apply_qt & # Qt theming is already handled by kde-material-colors

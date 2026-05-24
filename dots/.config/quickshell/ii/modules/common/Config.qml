@@ -151,13 +151,13 @@ Singleton {
 
             property JsonObject apps: JsonObject {
                 property string bluetooth: "kcmshell6 kcm_bluetooth"
-                property string changePassword: "kitty -1 --hold=yes fish -i -c 'passwd'"
+                property string changePassword: "kitty --hold=yes fish -i -c 'passwd'"
                 property string network: "kcmshell6 kcm_networkmanagement"
                 property string manageUser: "kcmshell6 kcm_users"
                 property string networkEthernet: "kcmshell6 kcm_networkmanagement"
                 property string taskManager: "plasma-systemmonitor --page-name Processes"
-                property string terminal: "kitty -1" // This is only for shell actions
-                property string update: "kitty -1 --hold=yes fish -i -c 'pkexec pacman -Syu'"
+                property string terminal: "kitty" // This is only for shell actions
+                property string update: "kitty bash -c '/home/juandiego/.config/hypr/hyprland/scripts/update_system.sh'"
                 property string volumeMixer: `~/.config/hypr/hyprland/scripts/launch_first_available.sh "pavucontrol-qt" "pavucontrol"`
             }
 
@@ -244,9 +244,11 @@ Singleton {
                 property JsonObject resources: JsonObject {
                     property bool alwaysShowSwap: true
                     property bool alwaysShowCpu: true
+                    property bool alwaysShowGpu: true
                     property int memoryWarningThreshold: 95
                     property int swapWarningThreshold: 85
                     property int cpuWarningThreshold: 90
+                    property int gpuWarningThreshold: 90
                 }
                 property list<string> screenList: [] // List of names, like "eDP-1", find out with 'hyprctl monitors' command
                 property JsonObject utilButtons: JsonObject {
@@ -399,7 +401,7 @@ Singleton {
 
             property JsonObject notifications: JsonObject {
                 property int timeout: 7000
-                property JsonObject monitor: JsonObject {
+                property JsonObject forceMonitor: JsonObject {
                     property bool enable: false
                     property string name: "" // Name of the monitor to show notifications on, like "eDP-1". Find out with 'hyprctl monitors' command
                 }

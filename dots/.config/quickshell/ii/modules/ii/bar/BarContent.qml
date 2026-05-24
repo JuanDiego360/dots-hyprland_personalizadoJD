@@ -317,6 +317,57 @@ Item { // Bar content region
                 }
             }
 
+            // Updates Indicator / Button
+            Revealer {
+                reveal: Updates.count > 0
+                Layout.fillHeight: true
+
+                Item {
+                    width: implicitWidth
+                    height: implicitHeight
+                    implicitWidth: Appearance.sizes.baseBarHeight - 10
+                    implicitHeight: implicitWidth
+                    anchors.verticalCenter: parent ? parent.verticalCenter : undefined
+
+                    RippleButton {
+                        id: updatesBarButton
+                        anchors.fill: parent
+                        buttonRadius: Appearance.rounding.full
+                        
+                        colBackground: barRightSideMouseArea.hovered ? Appearance.colors.colLayer1Hover : ColorUtils.transparentize(Appearance.colors.colLayer1Hover, 1)
+                        colBackgroundHover: Appearance.colors.colLayer1Hover
+                        colRipple: Appearance.colors.colLayer1Active
+
+                        // Define containsMouse alias for StyledPopup compatibility
+                        readonly property bool containsMouse: hovered
+
+                        onClicked: {
+                            Quickshell.execDetached(["bash", "-c", Config.options.apps.update]);
+                        }
+
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 2
+                            MaterialSymbol {
+                                text: "arrow_downward"
+                                iconSize: Appearance.font.pixelSize.larger
+                                color: Appearance.colors.colOnLayer0
+                            }
+                            StyledText {
+                                text: Updates.count.toString()
+                                font.pixelSize: Appearance.font.pixelSize.small
+                                color: Appearance.colors.colOnLayer0
+                            }
+                        }
+
+                        UpdatesPopup {
+                            hoverTarget: updatesBarButton
+                            xOffset: -50
+                        }
+                    }
+                }
+            }
+
             SysTray {
                 visible: root.useShortenedForm === 0
                 Layout.fillWidth: false
