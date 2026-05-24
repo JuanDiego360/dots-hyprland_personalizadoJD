@@ -86,5 +86,10 @@ else
     echo "========================================================"
 fi
 
+# Notificar a Quickshell para vaciar el contador de actualizaciones inmediatamente
+if command -v quickshell &> /dev/null; then
+    quickshell ipc -c ii call updates clear &> /dev/null || true
+fi
+
 echo "Presione cualquier tecla para cerrar esta ventana..."
 read -n 1 -s -r

@@ -14,7 +14,10 @@ Singleton {
 
     property bool available: false
     property alias checking: checkUpdatesProc.running
-    property int count: 0
+    property int pacmanCount: 0
+    property int aurCount: 0
+    property int flatpakCount: 0
+    property int count: pacmanCount + aurCount + flatpakCount
     
     readonly property bool updateAdvised: available && count > Config.options.updates.adviseUpdateThreshold
     readonly property bool updateStronglyAdvised: available && count > Config.options.updates.stronglyAdviseUpdateThreshold
@@ -48,11 +51,34 @@ Singleton {
 
     Process {
         id: checkUpdatesProc
-        command: ["bash", "-c", "checkupdates | wc -l"]
+        command: ["/home/juandiego/.config/hypr/hyprland/scripts/check_all_updates.sh"]
         stdout: StdioCollector {
             onStreamFinished: {
-                root.count = parseInt(text.trim());
+                const parts = text.trim().split(/\s+/);
+                if (parts.length >= 3) {
+                    root.pacmanCount = parseInt(parts[0]) || 0;
+                    root.aurCount = parseInt(parts[1]) || 0;
+                    root.flatpakCount = parseInt(parts[2]) || 0;
+                } else {
+                    root.pacmanCount = parseInt(text.trim()) || 0;
+                    root.aurCount = 0;
+                    root.flatpakCount = 0;
+                }
             }
+        }
+    }
+
+    IpcHandler {
+        target: "updates"
+
+        function refresh(): void {
+            root.refresh();
+        }
+
+        function clear(): void {
+            root.pacmanCount = 0;
+            root.aurCount = 0;
+            root.flatpakCount = 0;
         }
     }
 }
