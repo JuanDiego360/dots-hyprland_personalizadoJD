@@ -11,7 +11,7 @@ fi
 
 cd "$DOTS_DIR" || exit 1
 
-echo "🔄 Iniciando actualización de dots-hyprland..."
+echo "🔄 Iniciando actualización del dockfile"
 
 # Verificar si hay cambios locales sin guardar o pendientes de commit
 if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git status --porcelain)" ]; then
