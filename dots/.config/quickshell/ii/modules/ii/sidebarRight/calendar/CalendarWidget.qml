@@ -114,6 +114,8 @@ Item {
                     delegate: CalendarDayButton {
                         day: calendarLayout[modelData][index].day
                         isToday: calendarLayout[modelData][index].today
+                        month: calendarLayout[modelData][index].month
+                        year: calendarLayout[modelData][index].year
                     }
                 }
             }

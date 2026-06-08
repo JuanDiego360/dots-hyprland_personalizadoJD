@@ -85,11 +85,22 @@ function getCalendarLayout(dateObject, highlight) {
     var calendar = [...Array(6)].map(() => Array(7));
     var i = 0, j = 0;
     while (i < 6 && j < 7) {
+        var cellMonth = month - 1 + monthDiff;
+        var cellYear = year;
+        if (cellMonth < 0) {
+            cellMonth = 11;
+            cellYear--;
+        } else if (cellMonth > 11) {
+            cellMonth = 0;
+            cellYear++;
+        }
         calendar[i][j] = {
             "day": toFill,
             "today": ((toFill == day && monthDiff == 0 && highlight) ? 1 : (
                 monthDiff == 0 ? 0 : -1
-            ))
+            )),
+            "month": cellMonth,
+            "year": cellYear
         };
         // Increment
         toFill++;

@@ -16,6 +16,7 @@ import qs.modules.ii.sidebarRight.bluetoothDevices
 import qs.modules.ii.sidebarRight.nightLight
 import qs.modules.ii.sidebarRight.volumeMixer
 import qs.modules.ii.sidebarRight.wifiNetworks
+import qs.modules.ii.sidebarRight.calendar
 
 Item {
     id: root
@@ -27,7 +28,12 @@ Item {
     property bool showBluetoothDialog: false
     property bool showNightLightDialog: false
     property bool showWifiDialog: false
+    property bool showGoogleCalendarDialog: false
     property bool editMode: false
+
+    onShowGoogleCalendarDialogChanged: {
+        GlobalStates.googleCalendarDialogOpen = showGoogleCalendarDialog;
+    }
 
     Connections {
         target: GlobalStates
@@ -37,7 +43,11 @@ Item {
                 root.showBluetoothDialog = false;
                 root.showAudioOutputDialog = false;
                 root.showAudioInputDialog = false;
+                root.showGoogleCalendarDialog = false;
             }
+        }
+        function onGoogleCalendarDialogOpenChanged() {
+            root.showGoogleCalendarDialog = GlobalStates.googleCalendarDialogOpen;
         }
     }
 
@@ -151,6 +161,11 @@ Item {
             Network.enableWifi();
             Network.rescanWifi();
         }
+    }
+
+    ToggleDialog {
+        shownPropertyString: "showGoogleCalendarDialog"
+        dialog: GoogleCalendarDialog {}
     }
 
     component ToggleDialog: Loader {

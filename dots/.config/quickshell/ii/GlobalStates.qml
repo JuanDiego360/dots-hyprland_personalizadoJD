@@ -30,6 +30,8 @@ Singleton {
     property bool superReleaseMightTrigger: true
     property bool wallpaperSelectorOpen: false
     property bool workspaceShowNumbers: false
+    property bool googleCalendarDialogOpen: false
+    property var selectedCalendarDate: new Date()
 
     onSidebarRightOpenChanged: {
         if (GlobalStates.sidebarRightOpen) {
