@@ -137,7 +137,10 @@ Singleton {
                     "function": {
                         "name": "get_shell_config",
                         "description": "Get the desktop shell config file contents",
-                        "parameters": {}
+                        "parameters": {
+                            "type": "object",
+                            "properties": {}
+                        }
                     },
                 },
                 {
@@ -189,7 +192,10 @@ Singleton {
                     "function": {
                         "name": "get_shell_config",
                         "description": "Get the desktop shell config file contents",
-                        "parameters": {}
+                        "parameters": {
+                            "type": "object",
+                            "properties": {}
+                        }
                     },
                 },
                 {
@@ -589,7 +595,7 @@ Singleton {
                 root.postResponseHook();
                 root.postResponseHook = null; // Reset hook after use
             }
-            root.saveChat("lastSession")
+            // root.saveChat("lastSession")
             root.responseFinished()
         }
 
