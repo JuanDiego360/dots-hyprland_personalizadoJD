@@ -3,6 +3,7 @@ import qs.modules.common.widgets
 import qs.services
 import QtQuick
 import QtQuick.Layouts
+import qs.modules.ii.sidebarRight.calendar
 
 StyledPopup {
     id: root
@@ -46,6 +47,27 @@ StyledPopup {
             icon: "timelapse"
             label: Translation.tr("System uptime:")
             value: root.formattedUptime
+        }
+
+        Rectangle {
+            height: 1
+            color: Appearance.colors.colOutlineVariant
+            Layout.fillWidth: true
+            Layout.topMargin: 4
+            Layout.bottomMargin: 4
+        }
+
+        CalendarWidget {
+            id: calendarWidget
+            Layout.alignment: Qt.AlignHCenter
+        }
+
+        Rectangle {
+            height: 1
+            color: Appearance.colors.colOutlineVariant
+            Layout.fillWidth: true
+            Layout.topMargin: 4
+            Layout.bottomMargin: 4
         }
 
         // Tasks

@@ -44,6 +44,11 @@ Singleton {
         temp: 0,
         tempFeelsLike: 0,
         lastRefresh: 0,
+        moonIllum: "0%",
+        moonPhase: "Unknown",
+        moonDist: "0 km",
+        moonrise: "--:--",
+        moonset: "--:--"
     })
 
     function refineData(data) {
@@ -76,6 +81,29 @@ Singleton {
             temp.temp += "°C";
             temp.tempFeelsLike += "°C";
         }
+        temp.moonrise = data?.astronomy?.moonrise || "--:--";
+        temp.moonset = data?.astronomy?.moonset || "--:--";
+        temp.moonIllum = (data?.astronomy?.moon_illumination || "0") + "%";
+        
+        const phaseTranslations = {
+            "New Moon": "Luna nueva",
+            "Waxing Crescent": "Luna creciente",
+            "First Quarter": "Cuarto creciente",
+            "Waxing Gibbous": "Luna gibosa creciente",
+            "Full Moon": "Luna llena",
+            "Waning Gibbous": "Luna gibosa menguante",
+            "Last Quarter": "Cuarto menguante",
+            "Waning Crescent": "Luna menguante"
+        };
+        let englishPhase = data?.astronomy?.moon_phase || "Unknown";
+        temp.moonPhase = phaseTranslations[englishPhase] || englishPhase;
+
+        const now = new Date();
+        const d = (now.getTime() - Date.UTC(2000, 0, 1, 12, 0, 0)) / 86400000;
+        const M = (Math.PI / 180) * (134.963 + 13.064993 * d);
+        const dist = 385001 - 20905 * Math.cos(M);
+        temp.moonDist = Math.round(dist).toLocaleString() + " km";
+
         temp.lastRefresh = DateTime.time + " • " + DateTime.date;
         root.data = temp;
     }

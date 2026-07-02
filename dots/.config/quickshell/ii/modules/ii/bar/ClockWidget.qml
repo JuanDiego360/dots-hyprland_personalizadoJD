@@ -40,10 +40,17 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: !Config.options.bar.tooltips.clickToShow
+        hoverEnabled: !Config.options.bar.tooltips.clickToShow && !clockWidgetPopup.clickToToggle
+        onClicked: {
+            if (clockWidgetPopup.clickToToggle) {
+                clockWidgetPopup.shouldBeActive = !clockWidgetPopup.shouldBeActive;
+            }
+        }
 
         ClockWidgetPopup {
+            id: clockWidgetPopup
             hoverTarget: mouseArea
+            clickToToggle: true
         }
     }
 }

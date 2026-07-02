@@ -9,7 +9,12 @@ MouseArea {
     property bool alwaysShowAllResources: false
     implicitWidth: rowLayout.implicitWidth + rowLayout.anchors.leftMargin + rowLayout.anchors.rightMargin
     implicitHeight: Appearance.sizes.barHeight
-    hoverEnabled: !Config.options.bar.tooltips.clickToShow
+    hoverEnabled: !Config.options.bar.tooltips.clickToShow && !resourcesPopup.clickToToggle
+    onClicked: {
+        if (resourcesPopup.clickToToggle) {
+            resourcesPopup.shouldBeActive = !resourcesPopup.shouldBeActive;
+        }
+    }
 
     RowLayout {
         id: rowLayout
@@ -60,6 +65,8 @@ MouseArea {
     }
 
     ResourcesPopup {
+        id: resourcesPopup
         hoverTarget: root
+        clickToToggle: true
     }
 }

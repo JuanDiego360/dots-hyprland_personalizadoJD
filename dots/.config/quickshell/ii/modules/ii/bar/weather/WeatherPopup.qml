@@ -99,6 +99,26 @@ StyledPopup {
                 symbol: "bedtime"
                 value: Weather.data.sunset
             }
+            WeatherCard {
+                title: Translation.tr("Fase Lunar")
+                symbol: "brightness_4"
+                value: Weather.data.moonPhase
+            }
+            WeatherCard {
+                title: Translation.tr("Iluminación Luna")
+                symbol: "nightlight"
+                value: Weather.data.moonIllum
+            }
+            WeatherCard {
+                title: Translation.tr("Distancia Lunar")
+                symbol: "rocket_launch"
+                value: Weather.data.moonDist
+            }
+            WeatherCard {
+                title: Translation.tr("Salida / Ocaso Luna")
+                symbol: "nights_stay"
+                value: `${Weather.data.moonrise} / ${Weather.data.moonset}`
+            }
         }
 
         // Footer: last refresh
