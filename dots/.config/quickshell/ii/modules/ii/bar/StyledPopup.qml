@@ -53,6 +53,11 @@ LazyLoader {
                 root.shouldBeActive = !root.shouldBeActive;
             }
         }
+        function onVisibleChanged() {
+            if (root.hoverTarget && !root.hoverTarget.visible) {
+                root.shouldBeActive = false;
+            }
+        }
     }
 
     Component.onCompleted: {

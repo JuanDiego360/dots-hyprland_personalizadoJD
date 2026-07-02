@@ -343,6 +343,7 @@ Item { // Bar content region
 
                         onClicked: {
                             Quickshell.execDetached(["bash", "-c", Config.options.apps.update]);
+                            updatesPopup.shouldBeActive = false;
                         }
 
                         RowLayout {
@@ -361,6 +362,7 @@ Item { // Bar content region
                         }
 
                         UpdatesPopup {
+                            id: updatesPopup
                             hoverTarget: updatesBarButton
                             xOffset: -50
                         }
