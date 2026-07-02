@@ -12,12 +12,28 @@ RippleButton {
     property bool bold
     property int month: -1
     property int year: -1
+    property bool openDialogOnClick: true
+
+    readonly property bool isSelected: {
+        if (month === -1 || year === -1 || !day) return false;
+        var dayNum = parseInt(day);
+        if (isNaN(dayNum)) return false;
+        
+        var selectedDate = GlobalStates.selectedCalendarDate;
+        if (!selectedDate) return false;
+        
+        return selectedDate.getDate() === dayNum &&
+               selectedDate.getMonth() === month &&
+               selectedDate.getFullYear() === year;
+    }
 
     onClicked: {
         if (month !== -1 && year !== -1) {
             var selectedDate = new Date(year, month, parseInt(day));
             GlobalStates.selectedCalendarDate = selectedDate;
-            GlobalStates.googleCalendarDialogOpen = true;
+            if (openDialogOnClick) {
+                GlobalStates.googleCalendarDialogOpen = true;
+            }
         }
     }
 
@@ -26,7 +42,7 @@ RippleButton {
     implicitWidth: 38; 
     implicitHeight: 38;
 
-    toggled: (isToday == 1)
+    toggled: isSelected
     buttonRadius: Appearance.rounding.small
     
     contentItem: StyledText {
@@ -34,7 +50,8 @@ RippleButton {
         text: day
         horizontalAlignment: Text.AlignHCenter
         font.weight: bold ? Font.DemiBold : Font.Normal
-        color: (isToday == 1) ? Appearance.m3colors.m3onPrimary : 
+        color: button.toggled ? Appearance.m3colors.m3onPrimary : 
+            (isToday == 1) ? Appearance.colors.colPrimary : 
             (isToday == 0) ? Appearance.colors.colOnLayer1 : 
             Appearance.colors.colOutlineVariant
 

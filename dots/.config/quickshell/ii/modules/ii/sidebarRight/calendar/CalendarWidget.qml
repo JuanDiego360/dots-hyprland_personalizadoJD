@@ -6,11 +6,13 @@ import QtQuick
 import QtQuick.Layouts
 
 Item {
+    id: rootCalendar
     // Layout.topMargin: 10
     anchors.topMargin: 10
     property int monthShift: 0
     property var viewingDate: CalendarLayout.getDateInXMonthsTime(monthShift)
     property var calendarLayout: CalendarLayout.getCalendarLayout(viewingDate, monthShift === 0)
+    property bool openDialogOnClick: true
     implicitWidth: calendarColumn.width
     width: implicitWidth
     implicitHeight: calendarColumn.height + 10 * 2
@@ -117,6 +119,7 @@ Item {
                         isToday: calendarLayout[modelData][index].today
                         month: calendarLayout[modelData][index].month
                         year: calendarLayout[modelData][index].year
+                        openDialogOnClick: rootCalendar.openDialogOnClick
                     }
                 }
             }
